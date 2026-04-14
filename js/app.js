@@ -105,7 +105,7 @@
               </button>
             </div>
           </div>
-          <div class="flex gap-3 overflow-x-auto hide-scrollbar snap-x snap-mandatory">
+          <div class="flex items-stretch gap-3 overflow-x-auto hide-scrollbar snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:overflow-visible">
             ${motel.suites.map(suite => renderSuiteCard(motel, suite)).join('')}
           </div>
         </div>`;
@@ -117,13 +117,13 @@
 
   function renderSuiteCard(motel, suite) {
     return `
-      <div class="suite-card flex-none w-[72%] sm:w-[280px] bg-white rounded-2xl overflow-hidden border border-outline-variant/5 shadow-sm snap-center">
-        <div class="relative h-36">
+      <div class="suite-card flex-none w-[72%] sm:w-[280px] md:w-full bg-white rounded-2xl overflow-hidden border border-outline-variant/5 shadow-sm snap-center flex flex-col">
+        <div class="relative h-36 flex-shrink-0">
           <img alt="${suite.name}" class="w-full h-full object-cover" src="${suite.image}" loading="lazy" />
           <div class="absolute top-2 left-2 bg-primary text-white text-[9px] font-black px-1.5 py-0.5 rounded shadow">-${suite.discount}%</div>
         </div>
-        <div class="p-3.5 flex flex-col gap-3">
-          <div class="flex justify-between items-start gap-2">
+        <div class="p-3.5 flex flex-col gap-3 flex-1">
+          <div class="flex justify-between items-start gap-2 flex-1">
             <div class="flex-1 min-w-0">
               <h3 class="font-headline font-bold tracking-tight text-on-surface leading-[1.2] line-clamp-2 text-sm">${suite.name}</h3>
               <div class="flex gap-2 text-on-surface-variant/60 mt-1.5">
@@ -138,7 +138,7 @@
               </div>
             </div>
           </div>
-          <button class="w-full h-9 cta-gradient hover:brightness-110 text-white font-bold flex items-center justify-center gap-1.5 active:scale-[0.97] transition-all text-base rounded" data-book-motel="${motel.id}" data-book-suite="${suite.id}">
+          <button class="w-full h-9 cta-gradient hover:brightness-110 text-white font-bold flex items-center justify-center gap-1.5 active:scale-[0.97] transition-all text-base rounded mt-auto" data-book-motel="${motel.id}" data-book-suite="${suite.id}">
             Reservar <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </button>
         </div>
@@ -292,7 +292,7 @@
     let histHtml = '';
     DATA.reservationHistory.forEach((r, idx) => {
       histHtml += `
-        <div class="flex-none w-64 bg-white rounded-xl overflow-hidden border border-outline-variant/5 shadow-sm flex flex-row items-stretch stagger-item" style="animation-delay:${idx * 0.07}s">
+        <div class="flex-none w-64 md:w-full bg-white rounded-xl overflow-hidden border border-outline-variant/5 shadow-sm flex flex-row items-stretch stagger-item" style="animation-delay:${idx * 0.07}s">
           <div class="relative w-24 h-24 shrink-0">
             <img alt="${r.motelName}" class="w-full h-full object-cover grayscale" src="${r.image}" loading="lazy" />
           </div>
@@ -510,7 +510,6 @@
     document.getElementById('resumo-total-price').textContent = `R$ ${total},00`;
     document.getElementById('resumo-pay-now').textContent = `R$ ${payNow.toFixed(2).replace('.', ',')}`;
     document.getElementById('resumo-pay-local').textContent = `R$ ${payLocal.toFixed(2).replace('.', ',')}`;
-
     document.getElementById('payment-amount').textContent = `R$ ${payNow.toFixed(2).replace('.', ',')}`;
     document.getElementById('payment-total-display').textContent = `R$ ${payNow.toFixed(2).replace('.', ',')}`;
 

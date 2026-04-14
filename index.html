@@ -2,7 +2,7 @@
 <html class="light" lang="pt-BR">
 <head>
 <meta charset="utf-8" />
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport" />
 <title>Lokey - Reserve seu momento</title>
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -156,6 +156,128 @@ html, body {
 #page-chat footer { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
 /* Resumo footer safe area */
 #page-resumo > footer { padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+
+/* ===== RESPONSIVE WEB ADAPTATION ===== */
+@media (min-width: 768px) {
+  /* Content areas — full width with generous padding */
+  #home-feed,
+  #favorites-feed,
+  #reservas-content,
+  #page-ajuda > main,
+  #page-mensagens > main,
+  #page-resumo > main {
+    max-width: 100%;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  /* Chat + mensagens narrower for readability */
+  #page-chat > main {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Header content — match feed padding */
+  #home-header {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  /* Sticky page headers — match feed padding */
+  #page-reservas > header,
+  #page-favoritos > header {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  /* Subpage fixed headers — full width with padding */
+  #page-ajuda > header > div,
+  #page-mensagens > header > div,
+  #page-chat > header > div {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Chat footer — keep centered for readability */
+  #page-chat > footer > div {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Profile sections — full width */
+  #perfil-logged-in > header,
+  #perfil-logged-in > main,
+  #perfil-logged-out > header,
+  #perfil-logged-out > main {
+    max-width: 100%;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  /* Resumo footer — full width button */
+  #page-resumo > footer > button {
+    max-width: 100%;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    display: block;
+  }
+
+  /* Bottom nav — wider on desktop */
+  #bottom-nav {
+    max-width: 600px;
+  }
+
+  /* Bottom sheets — centered dialogs */
+  .bottom-sheet-content,
+  #logout-sheet,
+  #reviews-sheet,
+  #cards-sheet,
+  #account-sheet {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Favorites grid — neutralize space-y inside grid */
+  #favorites-feed > * + * { margin-top: 0 !important; }
+  /* Empty states span full grid */
+  #favorites-feed > :only-child { grid-column: 1 / -1; }
+}
+
+/* Large desktops — extra padding */
+@media (min-width: 1280px) {
+  #home-feed,
+  #favorites-feed,
+  #reservas-content,
+  #page-ajuda > main,
+  #page-mensagens > main,
+  #page-resumo > main {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  #home-header {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  #page-reservas > header,
+  #page-favoritos > header {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  #perfil-logged-in > header,
+  #perfil-logged-in > main,
+  #perfil-logged-out > header,
+  #perfil-logged-out > main {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
 </style>
 </head>
 <body class="bg-background text-on-surface font-body antialiased">
@@ -219,7 +341,7 @@ html, body {
         </div>
 
         <!-- Filter Chips -->
-        <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-1" id="filter-chips">
+        <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-1 md:flex-wrap md:overflow-visible" id="filter-chips">
           <button class="filter-chip flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-outline-variant/30 bg-inverse-surface text-white text-xs font-bold whitespace-nowrap shrink-0 active:scale-95 transition-all" onclick="toggleFilters()">
             <span class="material-symbols-outlined text-[16px]">tune</span>
             Filtros
@@ -253,7 +375,7 @@ html, body {
     <header class="sticky top-0 z-50 bg-background/95 backdrop-blur-md px-6 py-4">
       <h1 class="text-2xl font-extrabold font-headline">Meus Favoritos</h1>
     </header>
-    <main id="favorites-feed" class="px-6 pb-24 space-y-4">
+    <main id="favorites-feed" class="px-6 pb-24 space-y-4 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-4">
       <!-- Favorite suite cards rendered by JS. Empty state shown when none -->
     </main>
   </section>
@@ -321,7 +443,7 @@ html, body {
       <!-- History -->
       <div id="historico-section" class="mt-4">
         <p class="font-label text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant mb-4">HISTÓRICO</p>
-        <div id="historico-feed" class="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
+        <div id="historico-feed" class="flex gap-4 overflow-x-auto hide-scrollbar pb-4 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:overflow-visible">
           <!-- History cards rendered by JS -->
         </div>
       </div>
@@ -486,7 +608,7 @@ html, body {
       <!-- Bento Grid Categories -->
       <section class="mb-10">
         <p class="font-label text-[10px] font-bold uppercase tracking-[0.15em] text-secondary mb-4">Categorias em destaque</p>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div class="p-5 bg-surface-container-lowest shadow-sm rounded-xl border border-outline-variant/10 hover:shadow-md transition-shadow cursor-pointer group">
             <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center mb-4 group-active:scale-95 transition-transform">
               <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">bolt</span>
@@ -776,17 +898,17 @@ html, body {
             <div class="space-y-3">
               <div class="flex items-center justify-between py-2 border-b border-outline-variant/10">
                 <div class="flex flex-col">
-                  <span class="text-xs font-bold uppercase tracking-wide text-primary">Pagar agora</span>
+                  <span class="text-xs font-bold uppercase tracking-wide text-on-surface">Pagar agora</span>
                   <span class="text-[10px] text-on-surface-variant">Taxa + 5% da reserva</span>
                 </div>
-                <span id="resumo-pay-now" class="text-base font-bold text-primary">R$ 14,75</span>
+                <span id="resumo-pay-now" class="text-base font-bold text-on-surface">R$ 14,75</span>
               </div>
               <div class="flex items-center justify-between py-2">
                 <div class="flex flex-col">
-                  <span class="text-xs font-bold text-on-surface uppercase tracking-wide">Pagar no local</span>
+                  <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Pagar no local</span>
                   <span class="text-[10px] text-on-surface-variant">Valor restante</span>
                 </div>
-                <span id="resumo-pay-local" class="text-base font-bold text-on-surface">R$ 90,25</span>
+                <span id="resumo-pay-local" class="text-base font-bold text-on-surface-variant">R$ 90,25</span>
               </div>
             </div>
           </div>
@@ -948,7 +1070,7 @@ html, body {
         <!-- Room Type Grid -->
         <div class="mb-6">
           <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">Tipo de suíte</p>
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
             <button class="filter-chip p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low text-center active:scale-95 transition-all">
               <span class="material-symbols-outlined text-on-surface-variant mb-1">hotel</span>
               <p class="text-xs font-bold text-on-surface">Standart</p>
