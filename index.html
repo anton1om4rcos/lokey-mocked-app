@@ -164,8 +164,7 @@ html, body {
   #favorites-feed,
   #reservas-content,
   #page-ajuda > main,
-  #page-mensagens > main,
-  #page-resumo > main {
+  #page-mensagens > main {
     max-width: 100%;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
@@ -217,13 +216,7 @@ html, body {
     padding-right: 2.5rem;
   }
 
-  /* Resumo footer — full width button */
-  #page-resumo > footer > button {
-    max-width: 100%;
-    margin-left: 2.5rem;
-    margin-right: 2.5rem;
-    display: block;
-  }
+  /* Resumo footer — handled via inline classes */
 
   /* Bottom nav — wider on desktop */
   #bottom-nav {
@@ -253,8 +246,7 @@ html, body {
   #favorites-feed,
   #reservas-content,
   #page-ajuda > main,
-  #page-mensagens > main,
-  #page-resumo > main {
+  #page-mensagens > main {
     padding-left: 4rem;
     padding-right: 4rem;
   }
@@ -814,22 +806,27 @@ html, body {
   <!-- ====================================================================== -->
   <section class="page-section" id="page-resumo">
     <header class="sticky top-0 z-50 bg-background/95 backdrop-blur-md px-4 py-3">
-      <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors active:scale-95" data-back>
-        <span class="material-symbols-outlined text-primary">arrow_back</span>
-      </button>
+      <div class="md:max-w-[960px] md:mx-auto">
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors active:scale-95" data-back>
+          <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+      </div>
     </header>
-    <main class="px-6 pb-36 space-y-6">
-      <!-- Suite Card with Image Overlay -->
-      <div class="bg-white rounded-2xl overflow-hidden border border-outline-variant/5 shadow-sm">
-        <div class="relative h-44 overflow-hidden">
+    <main class="px-6 pb-36 space-y-6 md:max-w-[960px] md:mx-auto">
+      <!-- Suite Card with Image Overlay — two-column on desktop -->
+      <div class="bg-white rounded-2xl overflow-hidden border border-outline-variant/5 shadow-sm md:flex md:flex-row">
+        <!-- Image Column -->
+        <div class="relative h-44 md:h-auto md:w-[420px] md:min-h-[480px] md:flex-shrink-0 overflow-hidden">
           <img id="resumo-suite-image" alt="" class="w-full h-full object-cover" src="" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-          <div class="absolute bottom-3 left-4 right-4 text-white">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-black/5"></div>
+          <div class="absolute bottom-3 left-4 right-4 text-white md:bottom-auto md:top-6 md:left-6">
             <p id="resumo-motel-name" class="text-lg font-bold uppercase tracking-wider mb-0.5"></p>
             <h3 id="resumo-suite-name" class="font-headline font-medium tracking-tight text-sm leading-tight opacity-90"></h3>
           </div>
         </div>
-        <div class="p-4 flex flex-col">
+
+        <!-- Details Column -->
+        <div class="p-4 flex flex-col md:flex-1 md:p-6">
           <!-- Date & Time -->
           <div class="flex items-center gap-6 mt-2 text-on-surface">
             <div class="flex gap-2 items-center">
@@ -921,68 +918,71 @@ html, body {
         Ver avaliações
       </button>
 
-      <!-- Tolerance Info Card -->
-      <div class="bg-white rounded-lg p-5 border border-outline-variant/5 shadow-sm">
-        <div class="flex gap-4 items-start">
-          <div class="flex flex-col gap-1">
-            <div class="flex items-center gap-4">
-              <span class="material-symbols-outlined text-primary shrink-0 text-[20px]">hourglass_empty</span>
-              <h4 class="text-xs font-extrabold text-on-surface uppercase tracking-wider">Quando minha reserva começa a contar?</h4>
+      <!-- Info cards — two-column grid on desktop -->
+      <div class="space-y-6 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
+        <!-- Tolerance Info Card -->
+        <div class="bg-white rounded-lg p-5 border border-outline-variant/5 shadow-sm">
+          <div class="flex gap-4 items-start">
+            <div class="flex flex-col gap-1">
+              <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary shrink-0 text-[20px]">hourglass_empty</span>
+                <h4 class="text-xs font-extrabold text-on-surface uppercase tracking-wider">Quando minha reserva começa a contar?</h4>
+              </div>
+              <p class="text-[13px] text-on-surface-variant leading-snug mt-1">Fique tranquilo! Este motel oferece <span class="text-primary font-bold">15 minutos</span> de tolerância para sua chegada antes do início da reserva.</p>
             </div>
-            <p class="text-[13px] text-on-surface-variant leading-snug mt-1">Fique tranquilo! Este motel oferece <span class="text-primary font-bold">15 minutos</span> de tolerância para sua chegada antes do início da reserva.</p>
+          </div>
+        </div>
+
+        <!-- Policies Card -->
+        <div class="bg-white rounded-lg p-5 border border-outline-variant/5 shadow-sm">
+          <div class="flex flex-col gap-3">
+            <div class="flex gap-4 items-center">
+              <span class="material-symbols-outlined text-primary shrink-0 text-2xl">description</span>
+              <h4 class="text-xs font-extrabold text-on-surface uppercase tracking-wider">Políticas de Reserva</h4>
+            </div>
+            <div class="space-y-3">
+              <div class="flex gap-3 items-start">
+                <span class="material-symbols-outlined text-primary text-[20px] shrink-0">group</span>
+                <p class="text-[13px] text-on-surface-variant leading-snug">O valor informado é válido para hospedagem de até 2 pessoas.</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="material-symbols-outlined text-primary text-[20px] shrink-0">18_up_rating</span>
+                <p class="text-[13px] text-on-surface-variant leading-snug">A hospedagem é permitida apenas para maiores de 18 anos.</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="material-symbols-outlined text-primary text-[20px] shrink-0">cancel</span>
+                <p class="text-[13px] text-on-surface-variant leading-snug">Após a confirmação da reserva, você terá até <span class="text-primary font-bold">15 minutos</span> para cancelar sem qualquer custo.</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="material-symbols-outlined text-primary text-[20px] shrink-0">desk</span>
+                <p class="text-[13px] text-on-surface-variant leading-snug">Ao chegar ao motel, informe na recepção que a reserva foi realizada pelo aplicativo para garantir o direcionamento correto à sua suíte.</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="material-symbols-outlined text-primary text-[20px] shrink-0">auto_awesome</span>
+                <p class="text-[13px] text-on-surface-variant leading-snug">A suíte selecionada pode possuir variações de decoração. A acomodação será disponibilizada conforme a disponibilidade no momento do check-in, sem possibilidade de escolha específica.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Policies Card -->
-      <div class="bg-white rounded-lg p-5 border border-outline-variant/5 shadow-sm">
-        <div class="flex flex-col gap-3">
-          <div class="flex gap-4 items-center">
-            <span class="material-symbols-outlined text-primary shrink-0 text-2xl">description</span>
-            <h4 class="text-xs font-extrabold text-on-surface uppercase tracking-wider">Políticas de Reserva</h4>
+      <!-- Policy Checkbox — full width -->
+      <div class="pt-2">
+        <label class="flex items-center gap-3 cursor-pointer group">
+          <div class="relative flex items-center">
+            <input id="check-policies" type="checkbox" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-outline-variant transition-all checked:bg-primary checked:border-primary hover:border-primary focus:outline-none" />
+            <span class="material-symbols-outlined absolute text-white text-[16px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
           </div>
-          <div class="space-y-3">
-            <div class="flex gap-3 items-start">
-              <span class="material-symbols-outlined text-primary text-[20px] shrink-0">group</span>
-              <p class="text-[13px] text-on-surface-variant leading-snug">O valor informado é válido para hospedagem de até 2 pessoas.</p>
-            </div>
-            <div class="flex gap-3 items-start">
-              <span class="material-symbols-outlined text-primary text-[20px] shrink-0">18_up_rating</span>
-              <p class="text-[13px] text-on-surface-variant leading-snug">A hospedagem é permitida apenas para maiores de 18 anos.</p>
-            </div>
-            <div class="flex gap-3 items-start">
-              <span class="material-symbols-outlined text-primary text-[20px] shrink-0">cancel</span>
-              <p class="text-[13px] text-on-surface-variant leading-snug">Após a confirmação da reserva, você terá até <span class="text-primary font-bold">15 minutos</span> para cancelar sem qualquer custo.</p>
-            </div>
-            <div class="flex gap-3 items-start">
-              <span class="material-symbols-outlined text-primary text-[20px] shrink-0">desk</span>
-              <p class="text-[13px] text-on-surface-variant leading-snug">Ao chegar ao motel, informe na recepção que a reserva foi realizada pelo aplicativo para garantir o direcionamento correto à sua suíte.</p>
-            </div>
-            <div class="flex gap-3 items-start">
-              <span class="material-symbols-outlined text-primary text-[20px] shrink-0">auto_awesome</span>
-              <p class="text-[13px] text-on-surface-variant leading-snug">A suíte selecionada pode possuir variações de decoração. A acomodação será disponibilizada conforme a disponibilidade no momento do check-in, sem possibilidade de escolha específica.</p>
-            </div>
-          </div>
-
-          <!-- Policy Checkbox -->
-          <div class="mt-6 pt-4 border-t border-outline-variant/30">
-            <label class="flex items-center gap-3 cursor-pointer group">
-              <div class="relative flex items-center">
-                <input id="check-policies" type="checkbox" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-outline-variant transition-all checked:bg-primary checked:border-primary hover:border-primary focus:outline-none" />
-                <span class="material-symbols-outlined absolute text-white text-[16px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
-              </div>
-              <span class="text-[13px] font-bold text-on-surface uppercase tracking-wide group-hover:text-primary transition-colors">
-                Li e concordo com as políticas de reserva
-              </span>
-            </label>
-          </div>
-        </div>
+          <span class="text-[13px] font-bold text-on-surface uppercase tracking-wide group-hover:text-primary transition-colors">
+            Li e concordo com as políticas de reserva
+          </span>
+        </label>
       </div>
     </main>
 
     <!-- Fixed Footer -->
     <footer class="fixed bottom-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-t border-outline-variant/10 px-6 py-4">
-      <button id="confirm-reservation-btn" class="w-full cta-gradient text-white font-bold uppercase text-sm tracking-wider py-4 rounded-[8px] shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform">
+      <button id="confirm-reservation-btn" class="w-full md:max-w-[960px] md:mx-auto md:block cta-gradient text-white font-bold uppercase text-sm tracking-wider py-4 rounded-[8px] shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform">
         Confirmar reserva
       </button>
     </footer>
