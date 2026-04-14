@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+<title>Lokey - Reserve seu momento</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect" />
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "on-secondary": "#fbf8f8",
+        "error": "#9e3f4e",
+        "surface-container-highest": "#e3e2e2",
+        "on-surface-variant": "#6b6b6b",
+        "tertiary-fixed-dim": "#e96100",
+        "surface": "#fcf9f8",
+        "background": "#fbfbfb",
+        "on-error": "#fff7f7",
+        "secondary-container": "#f0eded",
+        "secondary-fixed": "#e4e2e1",
+        "surface-container-lowest": "#ffffff",
+        "surface-bright": "#fcf9f8",
+        "surface-variant": "#f0f0f0",
+        "error-container": "#ff8b9a",
+        "primary-container": "#ffdad5",
+        "tertiary-dim": "#8e3800",
+        "secondary-dim": "#535353",
+        "on-secondary-fixed-variant": "#5c5b5b",
+        "tertiary": "#a14100",
+        "primary": "#E31B1B",
+        "on-primary-fixed-variant": "#bb000a",
+        "on-tertiary-fixed-variant": "#431700",
+        "on-tertiary-container": "#330f00",
+        "on-tertiary-fixed": "#000000",
+        "error-dim": "#4f0116",
+        "on-background": "#2c2c2c",
+        "inverse-surface": "#0e0e0e",
+        "primary-fixed-dim": "#ffc7c0",
+        "surface-container": "#f5f5f5",
+        "outline": "#8e8e8e",
+        "surface-tint": "#E31B1B",
+        "primary-dim": "#a90008",
+        "inverse-on-surface": "#9e9c9c",
+        "on-tertiary": "#fff7f5",
+        "on-secondary-container": "#525151",
+        "on-surface": "#2c2c2c",
+        "tertiary-fixed": "#fe6b00",
+        "tertiary-container": "#fe6b00",
+        "surface-container-high": "#ebebeb",
+        "surface-container-low": "#f6f6f6",
+        "secondary": "#5f5f5f",
+        "inverse-primary": "#ff5446",
+        "on-primary-container": "#a80008",
+        "on-secondary-fixed": "#3f3f3f",
+        "primary-fixed": "#ffdad5",
+        "on-primary-fixed": "#850005",
+        "surface-dim": "#dbdada",
+        "on-primary": "#fffefd",
+        "outline-variant": "#d1d1d1",
+        "on-error-container": "#782232",
+        "secondary-fixed-dim": "#d6d4d3",
+        "brand-red": "#FF1E1E"
+      },
+      fontFamily: {
+        "headline": ["Manrope", "sans-serif"],
+        "body": ["Manrope", "sans-serif"],
+        "label": ["Inter", "sans-serif"]
+      },
+      borderRadius: {"DEFAULT": "10px", "lg": "14px", "xl": "18px", "2xl": "22px", "full": "9999px"},
+    },
+  },
+}
+</script>
+<style>
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+}
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+header { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.scrolled-header .greeting-container, .scrolled-header .search-full {
+    opacity: 0; height: 0; margin: 0 !important; padding: 0 !important; overflow: hidden; pointer-events: none;
+}
+.scrolled-header .search-mini-btn { display: flex !important; }
+.scrolled-header .mode-toggle-container { padding-bottom: 0; }
+.scrolled-header .top-row { padding-bottom: 8px; }
+.mini-search-active .search-mini-btn { display: none !important; }
+.scrolled-only-search-row { height: 0; opacity: 0; overflow: hidden; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
+.scrolled-header.mini-search-active .scrolled-only-search-row { height: auto; opacity: 1; pointer-events: auto; margin-top: 4px; }
+.cta-gradient { background: linear-gradient(135deg, #E31B1B 0%, #fe6b00 100%); }
+.cta-gradient-dark { background: linear-gradient(135deg, #2c2c2c 0%, #000000 100%); }
+.glass-effect { background-color: rgba(251, 251, 251, 0.85); backdrop-filter: blur(12px) saturate(180%); -webkit-backdrop-filter: blur(12px) saturate(180%); }
+.favorite-btn.active .material-symbols-outlined { font-variation-settings: 'FILL' 1; color: #E31B1B; }
+.suite-card { display: flex; flex-direction: column; transition: all 0.2s ease; }
+.bottom-sheet-modal { transition: visibility 0.4s; }
+.bottom-sheet-modal.hidden { visibility: hidden; }
+.bottom-sheet-content { transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1); transform: translateY(100%); }
+.bottom-sheet-modal:not(.hidden) .bottom-sheet-content { transform: translateY(0); }
+.backdrop { transition: opacity 0.4s ease; opacity: 0; }
+.range-slider { position: relative; height: 24px; display: flex; align-items: center; }
+.range-slider .slider-track { position: absolute; height: 4px; width: 100%; background: #e3e2e2; border-radius: 2px; z-index: 1; }
+.range-slider .slider-track-highlight { position: absolute; height: 4px; background: #FF1E1E; border-radius: 2px; z-index: 2; }
+.range-slider input[type="range"] { position: absolute; width: 100%; -webkit-appearance: none; appearance: none; background: none; pointer-events: none; margin: 0; z-index: 3; }
+.range-slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #ffffff; border: 2px solid #FF1E1E; box-shadow: 0 2px 8px rgba(0,0,0,0.15); cursor: pointer; pointer-events: auto; }
+.filter-chip.active { background-color: #FF1E1E !important; border-color: #FF1E1E !important; color: white !important; }
+.filter-chip.active span, .filter-chip.active p { color: white !important; }
+.removing-item { opacity: 0; transform: scale(0.95); height: 0; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.banner-glow { position: absolute; top: 50%; right: -10%; width: 80%; height: 150%; background: radial-gradient(circle at center, rgba(227, 27, 27, 0.15) 0%, rgba(0, 0, 0, 0) 70%); transform: translateY(-50%); pointer-events: none; }
+.banner-pattern { position: absolute; inset: 0; opacity: 0.03; background-image: radial-gradient(#ffffff 0.5px, transparent 0.5px); background-size: 12px 12px; pointer-events: none; }
+.rotate-icon { transition: transform 0.3s ease; }
+.page-section { display: none; }
+.page-section.active { display: block; animation: pageFadeIn 0.2s ease-out; }
+.nav-item.active { color: #E31B1B; font-weight: 700; }
+.nav-item.active .material-symbols-outlined { font-variation-settings: 'FILL' 1; }
+
+/* Page fade-in transition */
+@keyframes pageFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Chat message entrance */
+@keyframes msgSlideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.chat-msg-anim { animation: msgSlideIn 0.25s ease-out both; }
+
+/* Typing indicator */
+@keyframes typingDot { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
+.typing-dot { width: 6px; height: 6px; border-radius: 50%; background: #8e8e8e; display: inline-block; animation: typingDot 1.2s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+/* Staggered list item entrance */
+@keyframes staggerIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.stagger-item { animation: staggerIn 0.3s ease-out both; }
+
+/* Web browser safe-area support */
+html, body {
+  min-height: 100dvh;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+#bottom-nav {
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+/* Ensure content doesn't hide behind nav + browser chrome */
+.page-section main { padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); }
+/* Chat footer safe area */
+#page-chat footer { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+/* Resumo footer safe area */
+#page-resumo > footer { padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased">
+
+<div id="app">
+
+  <!-- ====================================================================== -->
+  <!-- PAGE: HOME (#home)                                                     -->
+  <!-- ====================================================================== -->
+  <section class="page-section active" id="page-home">
+    <!-- Fixed Header -->
+    <header id="home-header" class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md px-6 pt-4">
+      <!-- Top Row -->
+      <div class="top-row flex items-center justify-between pb-2">
+        <button id="location-btn" class="flex items-center gap-1.5 active:scale-95 transition-transform" onclick="toggleLocationModal()">
+          <span class="material-symbols-outlined text-primary text-[20px]">location_on</span>
+          <span id="location-text" class="text-sm font-bold">Belo Horizonte</span>
+          <span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span>
+        </button>
+        <div class="flex items-center gap-2">
+          <button class="search-mini-btn hidden w-10 h-10 items-center justify-center rounded-full hover:bg-surface-variant transition-colors" id="mini-search-btn">
+            <span class="material-symbols-outlined text-on-surface">search</span>
+          </button>
+          <a class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors" data-page="mensagens">
+            <span class="material-symbols-outlined text-on-surface">chat_bubble_outline</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Greeting -->
+      <div class="greeting-container mb-3">
+        <h1 class="font-headline text-xl font-extrabold" id="greeting-text">Boa noite, Matheus</h1>
+      </div>
+
+      <!-- Search Bar (full) -->
+      <div class="search-full mb-3">
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-4 text-outline">search</span>
+          <input id="home-search-input" type="text" placeholder="Onde você quer reservar?" class="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/20 rounded-xl focus:ring-2 focus:ring-primary/20 text-sm font-medium placeholder:text-on-surface-variant/60" />
+        </div>
+      </div>
+
+      <!-- Scrolled-only search row -->
+      <div class="scrolled-only-search-row" id="scrolled-search-row">
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-4 text-outline">search</span>
+          <input type="text" placeholder="Onde você quer reservar?" class="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/20 rounded-xl focus:ring-2 focus:ring-primary/20 text-sm font-medium placeholder:text-on-surface-variant/60" />
+        </div>
+      </div>
+
+      <!-- Mode Toggle -->
+      <div class="mode-toggle-container pb-3">
+        <div class="flex gap-2 mb-3">
+          <button id="mode-ir-agora" class="flex-1 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider cta-gradient text-white shadow-sm transition-all">
+            ir agora
+          </button>
+          <button id="mode-ir-outro-dia" class="flex-1 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-surface-container-low border border-outline-variant/20 text-on-surface-variant transition-all flex items-center justify-center gap-1.5" onclick="toggleScheduleModal()">
+            <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+            ir outro dia
+          </button>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-1" id="filter-chips">
+          <button class="filter-chip flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-outline-variant/30 bg-inverse-surface text-white text-xs font-bold whitespace-nowrap shrink-0 active:scale-95 transition-all" onclick="toggleFilters()">
+            <span class="material-symbols-outlined text-[16px]">tune</span>
+            Filtros
+          </button>
+          <button class="filter-chip flex items-center px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold whitespace-nowrap shrink-0 active:scale-95 transition-all">
+            Até R$120
+          </button>
+          <button class="filter-chip flex items-center px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold whitespace-nowrap shrink-0 active:scale-95 transition-all">
+            Hidro
+          </button>
+          <button class="filter-chip flex items-center px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold whitespace-nowrap shrink-0 active:scale-95 transition-all">
+            Piscina
+          </button>
+          <button class="filter-chip flex items-center px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold whitespace-nowrap shrink-0 active:scale-95 transition-all">
+            Música
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Feed Content -->
+    <main id="home-feed" class="pt-[300px] pb-28 px-6">
+      <!-- Motel sections will be rendered by JS -->
+    </main>
+  </section>
+
+  <!-- ====================================================================== -->
+  <!-- PAGE: FAVORITOS (#favoritos)                                           -->
+  <!-- ====================================================================== -->
+  <section class="page-section" id="page-favoritos">
+    <header class="sticky top-0 z-50 bg-background/95 backdrop-blur-md px-6 py-4">
+      <h1 class="text-2xl font-extrabold font-headline">Meus Favoritos</h1>
+    </header>
+    <main id="favorites-feed" class="px-6 pb-24 space-y-4">
+      <!-- Favorite suite cards rendered by JS. Empty state shown when none -->
+    </main>
+  </section>
+
+  <!-- ====================================================================== -->
+  <!-- PAGE: MAPA (#mapa)                                                     -->
+  <!-- ====================================================================== -->
+  <section class="page-section" id="page-mapa">
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-effect px-6 pt-4 pb-3">
+      <div class="flex items-center justify-between mb-3">
+        <button class="flex items-center gap-1.5 active:scale-95 transition-transform" onclick="toggleLocationModal()">
+          <span class="material-symbols-outlined text-primary text-[20px]">location_on</span>
+          <span class="text-sm font-bold">Belo Horizonte</span>
+          <span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span>
+        </button>
+        <a class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors" data-page="mensagens">
+          <span class="material-symbols-outlined text-on-surface">chat_bubble_outline</span>
+        </a>
+      </div>
+      <div class="relative flex items-center">
+        <span class="material-symbols-outlined absolute left-4 text-outline">search</span>
+        <input type="text" placeholder="Buscar motel no mapa..." class="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/20 rounded-xl focus:ring-2 focus:ring-primary/20 text-sm font-medium placeholder:text-on-surface-variant/60" />
+      </div>
+    </header>
+
+    <!-- Map -->
+    <div class="relative w-full h-screen">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3751.23456789!2d-43.938!3d-19.919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDU1JzA4LjQiUyA0M8KwNTYnMTYuOCJX!5e0!3m2!1sen!2sbr!4v1620000000000!5m2!1sen!2sbr" class="w-full h-full border-0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <!-- Top gradient overlay -->
+      <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background/80 to-transparent pointer-events-none"></div>
+      <!-- Bottom gradient overlay -->
+      <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background/80 to-transparent pointer-events-none"></div>
+    </div>
+  </section>
+
+  <!-- ====================================================================== -->
+  <!-- PAGE: RESERVAS (#reservas)                                             -->
+  <!-- ====================================================================== -->
+  <section class="page-section" id="page-reservas">
+    <header class="sticky top-0 z-50 bg-background/95 backdrop-blur-md px-6 py-4">
+      <h1 class="text-2xl font-extrabold font-headline">Minhas Reservas</h1>
+    </header>
+    <main id="reservas-content" class="px-6 pb-24">
+      <!-- Current reservation area -->
+      <div id="reserva-atual-section">
+        <!-- Empty state (shown by default) -->
+        <div id="reservas-empty" class="py-20 text-center">
+          <span class="material-symbols-outlined text-6xl text-on-surface-variant/20 mb-4 block">calendar_today</span>
+          <p class="text-on-surface-variant font-bold">Nenhuma reserva ativa</p>
+          <p class="text-on-surface-variant/60 text-xs mt-1">Suas reservas aparecerão aqui.</p>
+        </div>
+        <!-- Active reservation (hidden by default, shown by JS after booking) -->
+        <div id="reserva-ativa" class="hidden">
+          <div class="flex items-center justify-between mb-4">
+            <p class="font-label text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant">RESERVA ATUAL</p>
+            <span class="px-2.5 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded-full uppercase">Confirmada</span>
+          </div>
+          <div id="reserva-ativa-card" class="bg-white rounded-2xl overflow-hidden border border-outline-variant/5 shadow-sm mb-6">
+            <!-- Content rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- History -->
+      <div id="historico-section" class="mt-4">
+        <p class="font-label text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant mb-4">HISTÓRICO</p>
+        <div id="historico-feed" class="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
+          <!-- History cards rendered by JS -->
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- ====================================================================== -->
+  <!-- PAGE: PERFIL (#perfil)                                                 -->
+  <!-- ====================================================================== -->
+  <section class="page-section" id="page-perfil">
+    <!-- Logged-in state -->
+    <div id="perfil-logged-in">
+      <header class="px-6 pt-8 pb-4">
+        <h1 class="text-2xl font-extrabold font-headline mb-1" id="perfil-greeting">Olá, Matheus</h1>
+        <p class="text-on-surface-variant text-sm">Bem-vindo à sua área de perfil</p>
+        <div class="mt-6 flex items-center p-4 bg-white rounded-xl shadow-sm border border-outline-variant/10">
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg mr-4" id="perfil-avatar-initial">M</div>
+          <div class="flex-1">
+            <p class="font-bold text-sm" id="perfil-user-name">Matheus Oliveira</p>
+            <p class="text-xs text-on-surface-variant" id="perfil-user-email">matheus.oliveira@email.com</p>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant/40 cursor-pointer hover:text-primary transition-colors" onclick="toggleAccountSheet()">edit</span>
+        </div>
+      </header>
+      <main class="px-6 py-4 mb-32">
+        <div class="bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+          <a class="flex items-center p-4 hover:bg-surface-container-low transition-colors border-b border-outline-variant/5 cursor-pointer" onclick="toggleAccountSheet()">
+            <span class="material-symbols-outlined text-[22px] text-on-surface-variant mr-4">person</span>
+            <span class="flex-1 font-semibold text-sm">Minha conta</span>
+            <span class="material-symbols-outlined text-[20px] text-on-surface-variant/30">chevron_right</span>
+          </a>
+          <a class="flex items-center p-4 hover:bg-surface-container-low transition-colors border-b border-outline-variant/5 cursor-pointer" onclick="toggleCardsSheet()">
+            <span class="material-symbols-outlined text-[22px] text-on-surface-variant mr-4">credit_card</span>
+            <span class="flex-1 font-semibold text-sm">Cartões</span>
+            <span class="material-symbols-outlined text-[20px] text-on-surface-variant/30">chevron_right</span>
+          </a>
+          <a class="flex items-center p-4 hover:bg-surface-container-low transition-colors border-b border-outline-variant/5 cursor-pointer" onclick="toggleReviewsSheet()">
+            <span class="material-symbols-outlined text-[22px] text-on-surface-variant mr-4">star</span>
+            <span class="flex-1 font-semibold text-sm">Minhas avaliações</span>
+            <span class="material-symbols-outlined text-[20px] text-on-surface-variant/30">chevron_right</span>
+          </a>
+          <a class="flex items-center p-4 hover:bg-surface-container-low transition-colors border-b border-outline-variant/5 cursor-pointer" data-page="ajuda">
+            <span class="material-symbols-outlined text-[22px] text-on-surface-variant mr-4">help</span>
+            <span class="flex-1 font-semibold text-sm">Suporte</span>
+            <span class="material-symbols-outlined text-[20px] text-on-surface-variant/30">chevron_right</span>
+          </a>
+          <a class="flex items-center p-4 hover:bg-red-50 transition-colors cursor-pointer" onclick="toggleLogoutSheet()">
+            <span class="material-symbols-outlined text-[22px] text-primary mr-4">logout</span>
+            <span class="flex-1 font-semibold text-sm text-primary">Sair</span>
+            <span class="material-symbols-outlined text-[20px] text-primary/30">chevron_right</span>
+          </a>
+        </div>
+
+        <!-- Partnership Banner -->
+        <div class="mt-6 cta-gradient-dark rounded-2xl p-6 text-white shadow-lg overflow-hidden relative group cursor-pointer">
+          <div class="banner-pattern"></div>
+          <div class="banner-glow"></div>
+          <div class="relative z-10">
+            <div class="flex justify-between items-center gap-8">
+              <div class="flex-1">
+                <div class="flex items-center gap-1.5 mb-2 opacity-80">
+                  <span class="material-symbols-outlined text-[14px]" style="color: #E31B1B;">storefront</span>
+                  <span class="text-[10px] font-bold uppercase tracking-[0.1em]">Parceria</span>
+                </div>
+                <h3 class="text-xl font-extrabold font-headline mb-1">Tem um motel?</h3>
+                <p class="text-white/90 leading-relaxed text-base mb-5">Aumente suas reservas com a Lokey.</p>
+                <div class="inline-flex items-center bg-gradient-to-r from-primary to-tertiary-fixed text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-md group-hover:scale-105 transition-all duration-300">SAIBA MAIS</div>
+              </div>
+              <span class="material-symbols-outlined text-white opacity-20 text-7xl absolute -right-2 -bottom-2 rotate-[-12deg] pointer-events-none">campaign</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 text-center">
+          <p class="text-[10px] text-on-surface-variant/40 uppercase tracking-widest font-bold italic">LOKEY V1.0</p>
+        </div>
+      </main>
+    </div>
+
+    <!-- Logged-out state (hidden by default) -->
+    <div id="perfil-logged-out" class="hidden">
+      <header class="px-6 pt-8 pb-4">
+        <h1 class="text-2xl font-extrabold font-headline mb-1">Bem-vindo</h1>
+        <p class="text-on-surface-variant text-sm">Faça login para gerenciar suas reservas e favoritos</p>
+        <button class="mt-6 w-full cta-gradient text-white font-bold uppercase text-sm tracking-wider py-4 rounded-xl shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform" id="login-btn">
+          Entrar ou cadastrar-se
+        </button>
+      </header>
+      <main class="px-6 py-4 mb-32">
+        <div class="bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+          <a class="flex items-center p-4 border-b border-outline-variant/5 opacity-40 pointer-events-none">
+            <span class="material-symbols-outlined text-[22px] text-on-surface-variant mr-4">person</span>
+            <span class="flex-1 font-semibold text-sm">Minha conta</span>
+            <span class="material-symbols-outlined text-[20px] text-on-surface-variant/30">chevron_right</span>
+          </a>
+          <a class="flex items-center p-4 border-b border-outline-variant/5 opacity-40 pointer-events-none">
+            <span class="material-symbols-outlined text-[22px] text-on-surface-variant mr-4">credit_card</span>
+            <span class="flex-1 font-semibold text-sm">Cartões</span>
+            <span class="material-symbols-outlined text-[20px] text-on-surface-variant/30">chevron_right</span>
+          </a>
+          <a class="flex items-center p-4 border-b border-outline-variant/5 opacity-40 pointer-events-none">
+            <span class="material-symbols-outlined text-[22px] text-on-surface-variant mr-4">star</span>
+            <span class="flex-1 font-semibold text-sm">Minhas avaliações</span>
+            <span class="material-symbols-outlined text-[20px] text-on-surface-variant/30">chevron_right</span>
+          </a>
+          <a class="flex items-center p-4 hover:bg-surface-container-low transition-colors border-b border-outline-variant/5 cursor-pointer" data-page="ajuda">
+            <span class="material-symbols-outlined text-[22px] text-on-surface-variant mr-4">help</span>
+            <span class="flex-1 font-semibold text-sm">Suporte</span>
+            <span class="material-symbols-outlined text-[20px] text-on-surface-variant/30">chevron_right</span>
+          </a>
+        </div>
+
+        <!-- Partnership Banner -->
+        <div class="mt-6 cta-gradient-dark rounded-2xl p-6 text-white shadow-lg overflow-hidden relative group cursor-pointer">
+          <div class="banner-pattern"></div>
+          <div class="banner-glow"></div>
+          <div class="relative z-10">
+            <div class="flex justify-between items-center gap-8">
+              <div class="flex-1">
+                <div class="flex items-center gap-1.5 mb-2 opacity-80">
+                  <span class="material-symbols-outlined text-[14px]" style="color: #E31B1B;">storefront</span>
+                  <span class="text-[10px] font-bold uppercase tracking-[0.1em]">Parceria</span>
+                </div>
+                <h3 class="text-xl font-extrabold font-headline mb-1">Tem um motel?</h3>
+                <p class="text-white/90 leading-relaxed text-base mb-5">Aumente suas reservas com a Lokey.</p>
+                <div class="inline-flex items-center bg-gradient-to-r from-primary to-tertiary-fixed text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-md group-hover:scale-105 transition-all duration-300">SAIBA MAIS</div>
+              </div>
+              <span class="material-symbols-outlined text-white opacity-20 text-7xl absolute -right-2 -bottom-2 rotate-[-12deg] pointer-events-none">campaign</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 text-center">
+          <p class="text-[10px] text-on-surface-variant/40 uppercase tracking-widest font-bold italic">LOKEY V1.0</p>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- ====================================================================== -->
+  <!-- PAGE: AJUDA (#ajuda) - subpage                                         -->
+  <!-- ====================================================================== -->
+  <section class="page-section" id="page-ajuda">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md shadow-sm">
+      <div class="flex items-center px-4 h-16">
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors active:scale-95" data-back>
+          <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-headline font-bold text-lg tracking-tight ml-2">Suporte</h1>
+      </div>
+    </header>
+    <main class="pt-20 pb-32 px-6">
+      <!-- Search -->
+      <section class="mb-10">
+        <h2 class="text-2xl font-extrabold tracking-tight mb-6">Como podemos ajudar?</h2>
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-4 text-outline">search</span>
+          <input type="text" placeholder="Procure por tópicos ou dúvidas" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-on-surface-variant/60 font-medium" />
+        </div>
+      </section>
+
+      <!-- Bento Grid Categories -->
+      <section class="mb-10">
+        <p class="font-label text-[10px] font-bold uppercase tracking-[0.15em] text-secondary mb-4">Categorias em destaque</p>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="p-5 bg-surface-container-lowest shadow-sm rounded-xl border border-outline-variant/10 hover:shadow-md transition-shadow cursor-pointer group">
+            <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center mb-4 group-active:scale-95 transition-transform">
+              <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+            </div>
+            <h3 class="font-bold text-sm leading-tight">Reserva Rápida</h3>
+          </div>
+          <div class="p-5 bg-surface-container-lowest shadow-sm rounded-xl border border-outline-variant/10 hover:shadow-md transition-shadow cursor-pointer group">
+            <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center mb-4 group-active:scale-95 transition-transform">
+              <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+            </div>
+            <h3 class="font-bold text-sm leading-tight">Meus Favoritos</h3>
+          </div>
+          <div class="p-5 bg-surface-container-lowest shadow-sm rounded-xl border border-outline-variant/10 hover:shadow-md transition-shadow cursor-pointer group">
+            <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center mb-4 group-active:scale-95 transition-transform">
+              <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">payments</span>
+            </div>
+            <h3 class="font-bold text-sm leading-tight">Pagamentos no App</h3>
+          </div>
+          <div class="p-5 bg-surface-container-lowest shadow-sm rounded-xl border border-outline-variant/10 hover:shadow-md transition-shadow cursor-pointer group">
+            <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center mb-4 group-active:scale-95 transition-transform">
+              <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">bedtime</span>
+            </div>
+            <h3 class="font-bold text-sm leading-tight">Pernoite vs Período</h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Accordion -->
+      <section class="mb-12" id="faq-section">
+        <p class="font-label text-[10px] font-bold uppercase tracking-[0.15em] text-secondary mb-4">Dúvidas Frequentes</p>
+        <div class="space-y-2">
+          <!-- FAQ 1 -->
+          <div class="faq-item overflow-hidden bg-surface-container-low/50 rounded-xl">
+            <button class="flex items-center justify-between w-full p-4 hover:bg-surface-container-high transition-colors text-left group focus:outline-none">
+              <div class="flex items-center gap-4">
+                <div class="text-primary"><span class="material-symbols-outlined">event_busy</span></div>
+                <span class="font-semibold text-sm">Como cancelar uma reserva</span>
+              </div>
+              <span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform rotate-icon">chevron_right</span>
+            </button>
+            <div class="faq-content max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in-out">
+              <div class="px-4 pb-4 pt-1 text-sm text-secondary leading-relaxed">
+                Para cancelar, acesse a aba Reservas, selecione a reserva desejada e clique em Cancelar. Lembre-se que cancelamentos são gratuitos até 15 minutos após a confirmação.
+              </div>
+            </div>
+          </div>
+          <!-- FAQ 2 -->
+          <div class="faq-item overflow-hidden bg-surface-container-low/50 rounded-xl">
+            <button class="flex items-center justify-between w-full p-4 hover:bg-surface-container-high transition-colors text-left group focus:outline-none">
+              <div class="flex items-center gap-4">
+                <div class="text-primary"><span class="material-symbols-outlined">gavel</span></div>
+                <span class="font-semibold text-sm">Políticas de privacidade</span>
+              </div>
+              <span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform rotate-icon">chevron_right</span>
+            </button>
+            <div class="faq-content max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in-out">
+              <div class="px-4 pb-4 pt-1 text-sm text-secondary leading-relaxed">
+                Sua privacidade é nossa prioridade. Não compartilhamos seus dados pessoais com terceiros e todas as suas reservas são tratadas de forma anônima no estabelecimento.
+              </div>
+            </div>
+          </div>
+          <!-- FAQ 3 -->
+          <div class="faq-item overflow-hidden bg-surface-container-low/50 rounded-xl">
+            <button class="flex items-center justify-between w-full p-4 hover:bg-surface-container-high transition-colors text-left group focus:outline-none">
+              <div class="flex items-center gap-4">
+                <div class="text-primary"><span class="material-symbols-outlined">verified_user</span></div>
+                <span class="font-semibold text-sm">Segurança e anonimato</span>
+              </div>
+              <span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform rotate-icon">chevron_right</span>
+            </button>
+            <div class="faq-content max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in-out">
+              <div class="px-4 pb-4 pt-1 text-sm text-secondary leading-relaxed">
+                Utilizamos criptografia de ponta a ponta e não exigimos dados sensíveis desnecessários. Seu histórico de navegação e reservas é protegido por senha e biometria.
+              </div>
+            </div>
+          </div>
+          <!-- FAQ 4 -->
+          <div class="faq-item overflow-hidden bg-surface-container-low/50 rounded-xl">
+            <button class="flex items-center justify-between w-full p-4 hover:bg-surface-container-high transition-colors text-left group focus:outline-none">
+              <div class="flex items-center gap-4">
+                <div class="text-primary"><span class="material-symbols-outlined">chat</span></div>
+                <span class="font-semibold text-sm">Suporte via Chat 24h</span>
+              </div>
+              <span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform rotate-icon">chevron_right</span>
+            </button>
+            <div class="faq-content max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in-out">
+              <div class="px-4 pb-4 pt-1 text-sm text-secondary leading-relaxed">
+                Nosso time está disponível 24 horas por dia, 7 dias por semana para tirar suas dúvidas e resolver problemas em tempo real. Basta clicar no botão Falar com Consultor.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Banner -->
+      <section class="mb-10">
+        <div class="cta-gradient p-6 rounded-2xl text-white shadow-lg shadow-primary/20 relative overflow-hidden">
+          <div class="relative z-10">
+            <h4 class="text-lg font-bold mb-1">Ainda com dúvidas?</h4>
+            <p class="text-sm opacity-90 mb-4">Nossa equipe está disponível agora para te ajudar.</p>
+            <button class="bg-white text-primary px-6 py-2.5 rounded-lg font-bold text-sm shadow-sm active:scale-95 transition-transform">
+              Falar com Consultor
+            </button>
+          </div>
+          <div class="absolute -right-6 -bottom-6 opacity-20">
+            <span class="material-symbols-outlined text-[120px]">support_agent</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- ====================================================================== -->
+  <!-- PAGE: MENSAGENS (#mensagens) - subpage                                 -->
+  <!-- ====================================================================== -->
+  <section class="page-section" id="page-mensagens">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md shadow-sm">
+      <div class="flex items-center justify-between px-4 h-16">
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors active:scale-95" data-back>
+          <span class="material-symbols-outlined text-primary">arrow_back</span>
+        </button>
+        <h1 class="font-headline font-bold text-lg tracking-tight">Mensagens</h1>
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors active:scale-95">
+          <span class="material-symbols-outlined text-on-surface">add</span>
+        </button>
+      </div>
+    </header>
+    <main class="pt-20 pb-24 px-6">
+      <!-- Search -->
+      <div class="relative flex items-center mb-4">
+        <span class="material-symbols-outlined absolute left-4 text-outline">search</span>
+        <input type="text" placeholder="Pesquisar conversas..." class="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/20 rounded-xl focus:ring-2 focus:ring-primary/20 text-sm font-medium placeholder:text-on-surface-variant/60" />
+      </div>
+      <!-- Chat List -->
+      <div id="chat-list" class="space-y-1">
+        <!-- Chat items rendered by JS -->
+      </div>
+    </main>
+  </section>
+
+  <!-- ====================================================================== -->
+  <!-- PAGE: CHAT (#chat) - subpage                                           -->
+  <!-- ====================================================================== -->
+  <section class="page-section" id="page-chat">
+    <!-- Sticky Top Nav -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md shadow-sm">
+      <div class="flex items-center justify-between px-4 h-16">
+        <div class="flex items-center gap-3">
+          <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors active:scale-95" data-back>
+            <span class="material-symbols-outlined text-primary">arrow_back</span>
+          </button>
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <img id="chat-avatar" src="" alt="" class="w-9 h-9 rounded-full object-cover" />
+              <div id="chat-online-dot" class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-background rounded-full hidden"></div>
+            </div>
+            <div>
+              <p id="chat-motel-name" class="font-bold text-sm leading-tight"></p>
+              <p id="chat-online-status" class="text-[10px] text-on-surface-variant"></p>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <button id="chat-kebab-btn" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors active:scale-95">
+            <span class="material-symbols-outlined text-on-surface">more_vert</span>
+          </button>
+          <!-- Dropdown -->
+          <div id="chat-kebab-menu" class="hidden absolute right-0 top-12 bg-white rounded-xl shadow-lg border border-outline-variant/10 py-2 min-w-[180px] z-50">
+            <button class="w-full text-left px-4 py-3 text-sm font-medium hover:bg-surface-container-low transition-colors flex items-center gap-3">
+              <span class="material-symbols-outlined text-[18px] text-on-surface-variant">flag</span>
+              Denunciar
+            </button>
+            <button class="w-full text-left px-4 py-3 text-sm font-medium hover:bg-surface-container-low transition-colors flex items-center gap-3 text-primary">
+              <span class="material-symbols-outlined text-[18px]">delete</span>
+              Excluir conversa
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Chat Messages Area -->
+    <main id="chat-messages" class="pt-20 pb-32 px-6 space-y-3">
+      <!-- Messages rendered by JS -->
+    </main>
+
+    <!-- Fixed Bottom Input Bar -->
+    <footer class="fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-outline-variant/10 px-4 py-3">
+      <div class="flex items-center gap-3">
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors shrink-0">
+          <span class="material-symbols-outlined text-on-surface-variant">add</span>
+        </button>
+        <input id="chat-input" type="text" placeholder="Mensagem..." class="flex-1 px-4 py-2.5 bg-surface-container-low border border-outline-variant/20 rounded-full focus:ring-2 focus:ring-primary/20 text-sm font-medium placeholder:text-on-surface-variant/60" />
+        <button id="chat-send-btn" class="w-10 h-10 flex items-center justify-center rounded-full cta-gradient text-white shrink-0 active:scale-95 transition-transform">
+          <span class="material-symbols-outlined text-[20px]">send</span>
+        </button>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ====================================================================== -->
+  <!-- PAGE: RESUMO (#resumo) - subpage                                       -->
+  <!-- ====================================================================== -->
+  <section class="page-section" id="page-resumo">
+    <header class="sticky top-0 z-50 bg-background/95 backdrop-blur-md px-4 py-3">
+      <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors active:scale-95" data-back>
+        <span class="material-symbols-outlined text-primary">arrow_back</span>
+      </button>
+    </header>
+    <main class="px-6 pb-36 space-y-6">
+      <!-- Suite Card with Image Overlay -->
+      <div class="bg-white rounded-2xl overflow-hidden border border-outline-variant/5 shadow-sm">
+        <div class="relative h-44 overflow-hidden">
+          <img id="resumo-suite-image" alt="" class="w-full h-full object-cover" src="" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-3 left-4 right-4 text-white">
+            <p id="resumo-motel-name" class="text-lg font-bold uppercase tracking-wider mb-0.5"></p>
+            <h3 id="resumo-suite-name" class="font-headline font-medium tracking-tight text-sm leading-tight opacity-90"></h3>
+          </div>
+        </div>
+        <div class="p-4 flex flex-col">
+          <!-- Date & Time -->
+          <div class="flex items-center gap-6 mt-2 text-on-surface">
+            <div class="flex gap-2 items-center">
+              <span class="material-symbols-outlined text-[20px] text-primary">calendar_today</span>
+              <div class="flex flex-col">
+                <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider mb-0.5">DATA</span>
+                <span id="resumo-date" class="text-sm font-bold uppercase tracking-tight">13 ABR 2026</span>
+              </div>
+            </div>
+            <div class="flex gap-2 items-center ml-auto">
+              <span class="material-symbols-outlined text-[20px] text-primary">schedule</span>
+              <div class="flex flex-col items-start">
+                <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider mb-0.5">HORÁRIO</span>
+                <span id="resumo-time" class="text-sm font-bold uppercase tracking-tight">22:00 - 01:00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Duration Selector -->
+          <div class="flex items-center gap-3 mt-5">
+            <span class="material-symbols-outlined text-[24px] text-primary">timer</span>
+            <div class="flex-1 flex flex-col">
+              <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider mb-1 px-1">DURAÇÃO</span>
+              <div class="relative bg-surface-container-low border border-outline-variant/40 px-3 py-2 flex items-center justify-between group active:scale-[0.98] transition-transform rounded-lg">
+                <select id="resumo-duration-select" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10 appearance-none">
+                  <option value="2">2 Horas</option>
+                  <option value="3" selected>3 Horas</option>
+                  <option value="6">6 Horas</option>
+                  <option value="12">12 Horas</option>
+                  <option value="24">Pernoite</option>
+                </select>
+                <span id="resumo-duration-label" class="text-sm font-bold uppercase tracking-tight text-on-surface">3 Horas</span>
+                <div class="flex flex-col -space-y-1">
+                  <span class="material-symbols-outlined text-[18px] text-on-surface-variant leading-none">expand_less</span>
+                  <span class="material-symbols-outlined text-[18px] text-on-surface-variant leading-none">expand_more</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="border-t border-outline-variant/30 my-4" />
+
+          <!-- Price Breakdown -->
+          <div class="space-y-1 mb-4">
+            <div class="flex justify-between items-center">
+              <span class="text-[11px] text-on-surface-variant font-medium uppercase tracking-wider">Valor da suíte</span>
+              <span id="resumo-suite-price" class="text-sm text-on-surface font-semibold uppercase">R$ 95,00</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-[11px] text-on-surface-variant font-medium uppercase tracking-wider flex items-center">Taxa de serviço <span class="material-symbols-outlined text-[14px] ml-1 opacity-70 cursor-help">info</span></span>
+              <span id="resumo-service-fee" class="text-sm text-on-surface font-semibold uppercase">R$ 10,00</span>
+            </div>
+          </div>
+
+          <!-- Total -->
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex flex-col items-start">
+              <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider mb-0.5">VALOR TOTAL</span>
+              <span id="resumo-total-price" class="font-extrabold text-on-surface text-3xl">R$ 105,00</span>
+            </div>
+          </div>
+
+          <!-- Payment Stages -->
+          <div class="mt-2 bg-surface-container-low/50 p-4 border border-outline-variant/20 rounded-lg">
+            <h4 class="text-[11px] font-bold text-on-surface-variant uppercase tracking-[0.1em] mb-3">Etapas de Pagamento</h4>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between py-2 border-b border-outline-variant/10">
+                <div class="flex flex-col">
+                  <span class="text-xs font-bold uppercase tracking-wide text-primary">Pagar agora</span>
+                  <span class="text-[10px] text-on-surface-variant">Taxa + 5% da reserva</span>
+                </div>
+                <span id="resumo-pay-now" class="text-base font-bold text-primary">R$ 14,75</span>
+              </div>
+              <div class="flex items-center justify-between py-2">
+                <div class="flex flex-col">
+                  <span class="text-xs font-bold text-on-surface uppercase tracking-wide">Pagar no local</span>
+                  <span class="text-[10px] text-on-surface-variant">Valor restante</span>
+                </div>
+                <span id="resumo-pay-local" class="text-base font-bold text-on-surface">R$ 90,25</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ver avaliações -->
+      <button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg border border-outline-variant bg-surface-container-low hover:bg-surface-variant transition-colors text-on-surface font-bold uppercase text-xs tracking-wider">
+        <span class="material-symbols-outlined text-[18px]">star</span>
+        Ver avaliações
+      </button>
+
+      <!-- Tolerance Info Card -->
+      <div class="bg-white rounded-lg p-5 border border-outline-variant/5 shadow-sm">
+        <div class="flex gap-4 items-start">
+          <div class="flex flex-col gap-1">
+            <div class="flex items-center gap-4">
+              <span class="material-symbols-outlined text-primary shrink-0 text-[20px]">hourglass_empty</span>
+              <h4 class="text-xs font-extrabold text-on-surface uppercase tracking-wider">Quando minha reserva começa a contar?</h4>
+            </div>
+            <p class="text-[13px] text-on-surface-variant leading-snug mt-1">Fique tranquilo! Este motel oferece <span class="text-primary font-bold">15 minutos</span> de tolerância para sua chegada antes do início da reserva.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policies Card -->
+      <div class="bg-white rounded-lg p-5 border border-outline-variant/5 shadow-sm">
+        <div class="flex flex-col gap-3">
+          <div class="flex gap-4 items-center">
+            <span class="material-symbols-outlined text-primary shrink-0 text-2xl">description</span>
+            <h4 class="text-xs font-extrabold text-on-surface uppercase tracking-wider">Políticas de Reserva</h4>
+          </div>
+          <div class="space-y-3">
+            <div class="flex gap-3 items-start">
+              <span class="material-symbols-outlined text-primary text-[20px] shrink-0">group</span>
+              <p class="text-[13px] text-on-surface-variant leading-snug">O valor informado é válido para hospedagem de até 2 pessoas.</p>
+            </div>
+            <div class="flex gap-3 items-start">
+              <span class="material-symbols-outlined text-primary text-[20px] shrink-0">18_up_rating</span>
+              <p class="text-[13px] text-on-surface-variant leading-snug">A hospedagem é permitida apenas para maiores de 18 anos.</p>
+            </div>
+            <div class="flex gap-3 items-start">
+              <span class="material-symbols-outlined text-primary text-[20px] shrink-0">cancel</span>
+              <p class="text-[13px] text-on-surface-variant leading-snug">Após a confirmação da reserva, você terá até <span class="text-primary font-bold">15 minutos</span> para cancelar sem qualquer custo.</p>
+            </div>
+            <div class="flex gap-3 items-start">
+              <span class="material-symbols-outlined text-primary text-[20px] shrink-0">desk</span>
+              <p class="text-[13px] text-on-surface-variant leading-snug">Ao chegar ao motel, informe na recepção que a reserva foi realizada pelo aplicativo para garantir o direcionamento correto à sua suíte.</p>
+            </div>
+            <div class="flex gap-3 items-start">
+              <span class="material-symbols-outlined text-primary text-[20px] shrink-0">auto_awesome</span>
+              <p class="text-[13px] text-on-surface-variant leading-snug">A suíte selecionada pode possuir variações de decoração. A acomodação será disponibilizada conforme a disponibilidade no momento do check-in, sem possibilidade de escolha específica.</p>
+            </div>
+          </div>
+
+          <!-- Policy Checkbox -->
+          <div class="mt-6 pt-4 border-t border-outline-variant/30">
+            <label class="flex items-center gap-3 cursor-pointer group">
+              <div class="relative flex items-center">
+                <input id="check-policies" type="checkbox" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-outline-variant transition-all checked:bg-primary checked:border-primary hover:border-primary focus:outline-none" />
+                <span class="material-symbols-outlined absolute text-white text-[16px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+              </div>
+              <span class="text-[13px] font-bold text-on-surface uppercase tracking-wide group-hover:text-primary transition-colors">
+                Li e concordo com as políticas de reserva
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Fixed Footer -->
+    <footer class="fixed bottom-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-t border-outline-variant/10 px-6 py-4">
+      <button id="confirm-reservation-btn" class="w-full cta-gradient text-white font-bold uppercase text-sm tracking-wider py-4 rounded-[8px] shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform">
+        Confirmar reserva
+      </button>
+    </footer>
+  </section>
+
+
+  <!-- ====================================================================== -->
+  <!-- BOTTOM NAVIGATION BAR                                                  -->
+  <!-- ====================================================================== -->
+  <nav id="bottom-nav" class="fixed left-4 right-4 max-w-md mx-auto z-40 rounded-2xl glass-effect border border-outline-variant/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] flex justify-around items-center px-4 py-3">
+    <a class="nav-item flex flex-col items-center justify-center transition-all active:scale-95 active" data-page="home">
+      <span class="material-symbols-outlined text-[24px]">home</span>
+      <span class="font-label text-[9px] tracking-wide mt-0.5 font-semibold">Início</span>
+    </a>
+    <a class="nav-item flex flex-col items-center justify-center transition-all active:scale-95" data-page="favoritos">
+      <span class="material-symbols-outlined text-[24px]">favorite</span>
+      <span class="font-label text-[9px] tracking-wide mt-0.5 font-semibold">Favoritos</span>
+    </a>
+    <a class="nav-item flex flex-col items-center justify-center transition-all active:scale-95" data-page="mapa">
+      <span class="material-symbols-outlined text-[24px]">map</span>
+      <span class="font-label text-[9px] tracking-wide mt-0.5 font-semibold">Mapa</span>
+    </a>
+    <a class="nav-item flex flex-col items-center justify-center transition-all active:scale-95" data-page="reservas">
+      <span class="material-symbols-outlined text-[24px]">calendar_today</span>
+      <span class="font-label text-[9px] tracking-wide mt-0.5 font-semibold">Reservas</span>
+    </a>
+    <a class="nav-item flex flex-col items-center justify-center transition-all active:scale-95" data-page="perfil">
+      <span class="material-symbols-outlined text-[24px]">person</span>
+      <span class="font-label text-[9px] tracking-wide mt-0.5 font-semibold">Perfil</span>
+    </a>
+  </nav>
+
+
+  <!-- ====================================================================== -->
+  <!-- BOTTOM SHEET: FILTERS                                                  -->
+  <!-- ====================================================================== -->
+  <div id="filters-modal" class="bottom-sheet-modal fixed inset-0 z-[100] hidden">
+    <div class="backdrop absolute inset-0 bg-black/40" onclick="toggleFilters()"></div>
+    <div class="bottom-sheet-content absolute bottom-0 left-0 right-0 bg-background rounded-t-[20px] max-h-[85vh] flex flex-col">
+      <div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mx-auto my-3 shrink-0"></div>
+      <div class="flex-1 overflow-y-auto hide-scrollbar px-6 pb-6">
+        <h2 class="text-xl font-headline font-extrabold text-on-surface mb-6">Filtros</h2>
+
+        <!-- Price Range -->
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-3">
+            <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Faixa de preço</p>
+            <p id="price-label" class="text-xs font-bold text-primary">R$ 50 - R$ 500</p>
+          </div>
+          <div class="range-slider">
+            <div class="slider-track"></div>
+            <div id="slider-highlight" class="slider-track-highlight" style="left: 5%; right: 50%;"></div>
+            <input type="range" id="min-price" min="0" max="1000" value="50" />
+            <input type="range" id="max-price" min="0" max="1000" value="500" />
+          </div>
+        </div>
+
+        <!-- Sort Dropdown -->
+        <div class="mb-6">
+          <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">Ordenar por</p>
+          <select class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/20 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-primary/20">
+            <option>Relevância</option>
+            <option>Menor preço</option>
+            <option>Maior preço</option>
+            <option>Mais próximo</option>
+            <option>Melhor avaliação</option>
+          </select>
+        </div>
+
+        <!-- Amenities -->
+        <div class="mb-6">
+          <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">Comodidades</p>
+          <div class="flex flex-wrap gap-2" id="amenity-chips">
+            <button class="filter-chip px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold active:scale-95 transition-all">Wi-Fi</button>
+            <button class="filter-chip px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold active:scale-95 transition-all">Hidro</button>
+            <button class="filter-chip px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold active:scale-95 transition-all">Piscina</button>
+            <button class="filter-chip px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold active:scale-95 transition-all">Frigobar</button>
+            <button class="filter-chip px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold active:scale-95 transition-all">TV</button>
+            <button class="filter-chip px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold active:scale-95 transition-all">Ar-condicionado</button>
+            <button class="filter-chip px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold active:scale-95 transition-all">Varanda</button>
+            <button class="filter-chip px-3.5 py-2 rounded-full border border-outline-variant/30 bg-surface-container-low text-on-surface text-xs font-bold active:scale-95 transition-all">Música</button>
+          </div>
+        </div>
+
+        <!-- Room Type Grid -->
+        <div class="mb-6">
+          <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">Tipo de suíte</p>
+          <div class="grid grid-cols-2 gap-3">
+            <button class="filter-chip p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low text-center active:scale-95 transition-all">
+              <span class="material-symbols-outlined text-on-surface-variant mb-1">hotel</span>
+              <p class="text-xs font-bold text-on-surface">Standart</p>
+            </button>
+            <button class="filter-chip p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low text-center active:scale-95 transition-all">
+              <span class="material-symbols-outlined text-on-surface-variant mb-1">spa</span>
+              <p class="text-xs font-bold text-on-surface">Luxo</p>
+            </button>
+            <button class="filter-chip p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low text-center active:scale-95 transition-all">
+              <span class="material-symbols-outlined text-on-surface-variant mb-1">diamond</span>
+              <p class="text-xs font-bold text-on-surface">Premium</p>
+            </button>
+            <button class="filter-chip p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low text-center active:scale-95 transition-all">
+              <span class="material-symbols-outlined text-on-surface-variant mb-1">castle</span>
+              <p class="text-xs font-bold text-on-surface">Master</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Apply Button -->
+        <button class="w-full cta-gradient text-white font-bold uppercase text-sm tracking-wider py-4 rounded-[8px] shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform" onclick="toggleFilters()">
+          Aplicar Filtros
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- BOTTOM SHEET: LOCATION                                                 -->
+  <!-- ====================================================================== -->
+  <div id="location-modal" class="bottom-sheet-modal fixed inset-0 z-[100] hidden">
+    <div class="backdrop absolute inset-0 bg-black/40" onclick="toggleLocationModal()"></div>
+    <div class="bottom-sheet-content absolute bottom-0 left-0 right-0 bg-background rounded-t-[20px] max-h-[85vh] flex flex-col" id="location-content">
+      <div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mx-auto my-3 shrink-0"></div>
+      <div class="flex-1 overflow-y-auto hide-scrollbar px-6 pb-6">
+        <h2 class="text-xl font-headline font-extrabold text-on-surface mb-6">Localização</h2>
+
+        <!-- City Search -->
+        <div class="relative flex items-center mb-4">
+          <span class="material-symbols-outlined absolute left-4 text-outline">search</span>
+          <input type="text" placeholder="Buscar cidade..." class="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/20 rounded-xl focus:ring-2 focus:ring-primary/20 text-sm font-medium placeholder:text-on-surface-variant/60" />
+        </div>
+
+        <!-- Use Current Location -->
+        <button class="w-full flex items-center gap-3 p-4 rounded-xl bg-primary/5 border border-primary/20 mb-4 active:scale-[0.98] transition-transform">
+          <span class="material-symbols-outlined text-primary">my_location</span>
+          <span class="text-sm font-bold text-primary">Usar localização atual</span>
+        </button>
+
+        <!-- Distance Slider -->
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-3">
+            <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Distância máxima</p>
+            <p id="distance-label" class="text-xs font-bold text-primary">0 km - 25 km</p>
+          </div>
+          <div class="range-slider">
+            <div class="slider-track"></div>
+            <div id="distance-slider-highlight" class="slider-track-highlight" style="left: 0%; right: 50%;"></div>
+            <input type="range" id="distance-slider" min="0" max="50" value="25" />
+          </div>
+        </div>
+
+        <!-- City List -->
+        <div class="space-y-1" id="city-list">
+          <!-- Cities rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- BOTTOM SHEET: SCHEDULE                                                 -->
+  <!-- ====================================================================== -->
+  <div id="schedule-modal" class="bottom-sheet-modal fixed inset-0 z-[100] hidden">
+    <div class="backdrop absolute inset-0 bg-black/40" onclick="toggleScheduleModal()"></div>
+    <div class="bottom-sheet-content absolute bottom-0 left-0 right-0 bg-background rounded-t-[20px] max-h-[90vh] flex flex-col">
+      <div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mx-auto my-3 shrink-0"></div>
+      <div class="flex-1 overflow-y-auto hide-scrollbar px-6 pb-6">
+        <h2 class="text-xl font-headline font-extrabold text-on-surface mb-6">Agendar reserva</h2>
+
+        <!-- Calendar -->
+        <div class="mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <button id="cal-prev" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors">
+              <span class="material-symbols-outlined text-on-surface-variant">chevron_left</span>
+            </button>
+            <p id="cal-month-label" class="text-sm font-bold text-on-surface uppercase tracking-wider">Abril 2026</p>
+            <button id="cal-next" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors">
+              <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+            </button>
+          </div>
+          <div class="grid grid-cols-7 gap-1 text-center mb-2">
+            <span class="text-[10px] text-on-surface-variant font-bold uppercase">Dom</span>
+            <span class="text-[10px] text-on-surface-variant font-bold uppercase">Seg</span>
+            <span class="text-[10px] text-on-surface-variant font-bold uppercase">Ter</span>
+            <span class="text-[10px] text-on-surface-variant font-bold uppercase">Qua</span>
+            <span class="text-[10px] text-on-surface-variant font-bold uppercase">Qui</span>
+            <span class="text-[10px] text-on-surface-variant font-bold uppercase">Sex</span>
+            <span class="text-[10px] text-on-surface-variant font-bold uppercase">Sáb</span>
+          </div>
+          <div id="cal-days" class="grid grid-cols-7 gap-1 text-center">
+            <!-- Calendar days rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Reservation Type Toggle -->
+        <div class="mb-6">
+          <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">Tipo de reserva</p>
+          <div class="flex p-1 bg-surface-container-low rounded-xl">
+            <button id="type-periodo" class="flex-1 py-2.5 text-xs font-bold rounded-lg bg-primary text-white shadow-sm transition-all">Período</button>
+            <button id="type-diaria" class="flex-1 py-2.5 text-xs font-bold rounded-lg text-on-surface-variant hover:bg-white/50 transition-all">Diária</button>
+          </div>
+        </div>
+
+        <!-- Time Inputs -->
+        <div class="mb-6" id="schedule-time-section">
+          <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">Horário</p>
+          <div class="flex gap-4">
+            <div class="flex-1">
+              <label class="block text-[10px] text-on-surface-variant font-bold uppercase tracking-wider mb-1.5">Entrada</label>
+              <input type="time" value="22:00" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/20 rounded-xl text-sm font-bold focus:ring-2 focus:ring-primary/20" />
+            </div>
+            <div class="flex-1">
+              <label class="block text-[10px] text-on-surface-variant font-bold uppercase tracking-wider mb-1.5">Saída</label>
+              <input type="time" value="01:00" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/20 rounded-xl text-sm font-bold focus:ring-2 focus:ring-primary/20" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Pernoite Toggle -->
+        <div class="mb-6 flex items-center justify-between p-4 bg-surface-container-low rounded-xl border border-outline-variant/20">
+          <div>
+            <p class="text-sm font-bold text-on-surface">Pernoite</p>
+            <p class="text-[11px] text-on-surface-variant">Entrada a partir das 20h</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="pernoite-toggle" class="sr-only peer" />
+            <div class="w-11 h-6 bg-outline-variant/40 rounded-full peer peer-checked:bg-primary transition-colors after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
+          </label>
+        </div>
+
+        <!-- Confirm Button -->
+        <button class="w-full cta-gradient text-white font-bold uppercase text-sm tracking-wider py-4 rounded-[8px] shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform" onclick="toggleScheduleModal()">
+          Confirmar data
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- BOTTOM SHEET: PAYMENT                                                  -->
+  <!-- ====================================================================== -->
+  <div id="payment-bottom-sheet" class="bottom-sheet-modal fixed inset-0 z-[100] hidden">
+    <div class="backdrop absolute inset-0 bg-black/40" id="payment-backdrop"></div>
+    <div class="bottom-sheet-content absolute bottom-0 left-0 right-0 bg-background rounded-t-[20px] flex flex-col max-h-[90vh]" id="payment-sheet-content">
+      <div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mx-auto my-3 shrink-0 cursor-grab" id="payment-drag-handle"></div>
+      <div class="px-6 pb-8 space-y-6">
+        <div class="flex flex-col">
+          <h2 class="text-xl font-headline font-extrabold text-on-surface uppercase tracking-tight">Método de Pagamento</h2>
+          <p class="text-[11px] text-on-surface-variant font-bold uppercase tracking-wider mt-1">Valor da reserva: <span id="payment-amount">R$ 14,75</span></p>
+        </div>
+        <!-- Payment Options -->
+        <div class="space-y-3">
+          <label id="label-credit-card" class="flex items-center justify-between p-4 rounded-[8px] border-2 cursor-pointer border-outline-variant">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10">
+                <span class="material-symbols-outlined text-primary">credit_card</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm font-bold text-on-surface">Cartão de Crédito</span>
+                <span class="text-[11px] text-on-surface-variant">Até 12x no cartão</span>
+              </div>
+            </div>
+            <input type="radio" name="payment-method" class="w-5 h-5 text-primary border-outline-variant focus:ring-primary" />
+          </label>
+          <label id="label-pix" class="flex items-center justify-between p-4 rounded-[8px] border-2 cursor-pointer border-primary bg-primary/5 transition-colors">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10">
+                <svg class="w-6 h-6 fill-current text-primary" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M306.4 356.5C311.8 351.1 321.1 351.1 326.5 356.5L403.5 433.5C417.7 447.7 436.6 455.5 456.6 455.5L471.7 455.5L374.6 552.6C344.3 582.1 295.1 582.1 264.8 552.6L167.3 455.2L176.6 455.2C196.6 455.2 215.5 447.4 229.7 433.2L306.4 356.5zM326.5 282.9C320.1 288.4 311.9 288.5 306.4 282.9L229.7 206.2C215.5 191.1 196.6 184.2 176.6 184.2L167.3 184.2L264.7 86.8C295.1 56.5 344.3 56.5 374.6 86.8L471.8 183.9L456.6 183.9C436.6 183.9 417.7 191.7 403.5 205.9L326.5 282.9zM176.6 206.7C190.4 206.7 203.1 212.3 213.7 222.1L290.4 298.8C297.6 305.1 307 309.6 316.5 309.6C325.9 309.6 335.3 305.1 342.5 298.8L419.5 221.8C429.3 212.1 442.8 206.5 456.6 206.5L494.3 206.5L552.6 264.8C582.9 295.1 582.9 344.3 552.6 374.6L494.3 432.9L456.6 432.9C442.8 432.9 429.3 427.3 419.5 417.5L342.5 340.5C328.6 326.6 304.3 326.6 290.4 340.6L213.7 417.2C203.1 427 190.4 432.6 176.6 432.6L144.8 432.6L86.8 374.6C56.5 344.3 56.5 295.1 86.8 264.8L144.8 206.7L176.6 206.7z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm font-bold text-on-surface">Pix</span>
+                <span class="text-[11px] text-on-surface-variant">Aprovação instantânea</span>
+              </div>
+            </div>
+            <input type="radio" name="payment-method" id="pay-pix" class="w-5 h-5 text-primary border-outline-variant focus:ring-primary" checked />
+          </label>
+        </div>
+        <!-- Summary & Action -->
+        <div class="pt-4 space-y-4">
+          <div class="flex justify-between items-center px-1">
+            <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Pagar agora:</span>
+            <span id="payment-total-display" class="text-xl font-extrabold text-primary">R$ 14,75</span>
+          </div>
+          <button id="confirm-payment-btn" class="w-full cta-gradient text-white font-bold uppercase text-sm tracking-wider py-4 rounded-[8px] shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform">
+            Confirmar Pagamento
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- BOTTOM SHEET: LOGOUT                                                   -->
+  <!-- ====================================================================== -->
+  <div id="logout-overlay" class="fixed inset-0 z-[100] hidden transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="toggleLogoutSheet()"></div>
+    <div id="logout-sheet" class="absolute bottom-0 left-0 right-0 bg-surface rounded-t-[2rem] shadow-2xl transform transition-transform duration-300 translate-y-full px-8 pb-8 pt-3">
+      <div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mx-auto mb-6"></div>
+      <div class="text-center mb-8">
+        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="material-symbols-outlined text-3xl text-primary">logout</span>
+        </div>
+        <h2 class="text-xl font-extrabold font-headline mb-2">Deseja realmente sair?</h2>
+        <p class="text-on-surface-variant text-sm px-4">Você precisará fazer login novamente para acessar suas reservas e favoritos.</p>
+      </div>
+      <div class="flex flex-col gap-3">
+        <button id="logout-confirm-btn" class="w-full py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+          Sair
+        </button>
+        <button class="w-full py-4 border-2 border-outline-variant/30 text-on-surface font-bold rounded-xl hover:bg-surface-container-low transition-all" onclick="toggleLogoutSheet()">
+          Cancelar
+        </button>
+      </div>
+      <div class="h-4"></div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- BOTTOM SHEET: REVIEWS                                                  -->
+  <!-- ====================================================================== -->
+  <div id="reviews-overlay" class="fixed inset-0 z-[100] hidden transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="toggleReviewsSheet()"></div>
+    <div id="reviews-sheet" class="absolute bottom-0 left-0 right-0 bg-surface rounded-t-[2rem] shadow-2xl transform transition-transform duration-300 translate-y-full px-6 pb-8 pt-3 max-h-[80vh] flex flex-col">
+      <div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mx-auto mb-6 shrink-0"></div>
+      <div class="flex items-center mb-6 shrink-0">
+        <h2 class="text-xl font-extrabold font-headline">Minhas avaliações</h2>
+      </div>
+      <!-- Tabs -->
+      <div class="flex p-1 bg-surface-container-low rounded-xl mb-6 shrink-0">
+        <button id="btn-tab-feitas" class="flex-1 py-2 text-xs font-bold rounded-lg bg-primary text-white shadow-sm transition-all" onclick="switchReviewsTab('feitas')">Feitas</button>
+        <button id="btn-tab-pendentes" class="flex-1 py-2 text-xs font-bold rounded-lg text-on-surface-variant hover:bg-white/50 transition-all" onclick="switchReviewsTab('pendentes')">Pendentes</button>
+      </div>
+      <div class="flex-1 overflow-y-auto pr-2 -mr-2 hide-scrollbar">
+        <!-- Feitas -->
+        <div class="space-y-4 pb-4" id="reviews-list-feitas">
+          <div class="p-4 bg-white rounded-xl border border-outline-variant/10 shadow-sm">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h4 class="font-bold text-sm">Motel Eclipse</h4>
+                <p class="text-[10px] text-on-surface-variant uppercase font-semibold">10 Abr 2026</p>
+              </div>
+              <div class="flex text-primary">
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+              </div>
+            </div>
+            <p class="text-xs text-on-surface-variant italic leading-relaxed">"Experiência incrível, quarto impecável e atendimento de primeira. Com certeza voltarei!"</p>
+          </div>
+          <div class="p-4 bg-white rounded-xl border border-outline-variant/10 shadow-sm">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h4 class="font-bold text-sm">Luxury Motel</h4>
+                <p class="text-[10px] text-on-surface-variant uppercase font-semibold">05 Abr 2026</p>
+              </div>
+              <div class="flex text-primary">
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm">star</span>
+              </div>
+            </div>
+            <p class="text-xs text-on-surface-variant italic leading-relaxed">"Muito bom, mas a piscina estava um pouco fria. Fora isso, tudo perfeito."</p>
+          </div>
+          <div class="p-4 bg-white rounded-xl border border-outline-variant/10 shadow-sm">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h4 class="font-bold text-sm">Motel Eclipse</h4>
+                <p class="text-[10px] text-on-surface-variant uppercase font-semibold">28 Mar 2026</p>
+              </div>
+              <div class="flex text-primary">
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm">star</span>
+                <span class="material-symbols-outlined text-sm">star</span>
+              </div>
+            </div>
+            <p class="text-xs text-on-surface-variant italic leading-relaxed">"O cardápio poderia ter mais opções, mas a suíte é muito confortável."</p>
+          </div>
+        </div>
+        <!-- Pendentes -->
+        <div class="space-y-4 pb-4 hidden" id="reviews-list-pendentes">
+          <div class="p-4 bg-white rounded-xl border border-outline-variant/10 shadow-sm">
+            <div class="flex justify-between items-center mb-3">
+              <div>
+                <h4 class="font-bold text-sm">Luxury Motel</h4>
+                <p class="text-[10px] text-on-surface-variant uppercase font-semibold">Ontem</p>
+              </div>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded-full">Pendente</span>
+            </div>
+            <p class="text-xs text-on-surface-variant mb-4">Como foi sua estadia? Sua opinião ajuda outros usuários!</p>
+            <button class="w-full py-2 bg-primary/5 text-primary text-xs font-bold rounded-lg border border-primary/20 hover:bg-primary/10 transition-colors">AVALIAR AGORA</button>
+          </div>
+          <div class="p-4 bg-white rounded-xl border border-outline-variant/10 shadow-sm">
+            <div class="flex justify-between items-center mb-3">
+              <div>
+                <h4 class="font-bold text-sm">Motel Eclipse</h4>
+                <p class="text-[10px] text-on-surface-variant uppercase font-semibold">15 Mar 2026</p>
+              </div>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded-full">Pendente</span>
+            </div>
+            <p class="text-xs text-on-surface-variant mb-4">Você ainda não avaliou sua visita recente.</p>
+            <button class="w-full py-2 bg-primary/5 text-primary text-xs font-bold rounded-lg border border-primary/20 hover:bg-primary/10 transition-colors">AVALIAR AGORA</button>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6 shrink-0">
+        <button class="w-full py-4 border-2 border-outline-variant/30 text-on-surface font-bold rounded-xl hover:bg-surface-container-low transition-all" onclick="toggleReviewsSheet()">Fechar</button>
+      </div>
+      <div class="h-4 shrink-0"></div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- BOTTOM SHEET: CARDS                                                    -->
+  <!-- ====================================================================== -->
+  <div id="cards-overlay" class="fixed inset-0 z-[100] hidden transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="toggleCardsSheet()"></div>
+    <div id="cards-sheet" class="absolute bottom-0 left-0 right-0 bg-surface rounded-t-[2rem] shadow-2xl transform transition-transform duration-300 translate-y-full px-6 pb-8 pt-3 max-h-[80vh] flex flex-col">
+      <div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mx-auto mb-6 shrink-0"></div>
+      <div class="flex items-center mb-6 shrink-0">
+        <h2 class="text-xl font-extrabold font-headline" id="cards-sheet-title">Meus cartões</h2>
+      </div>
+      <!-- List View -->
+      <div class="flex-1 flex flex-col overflow-hidden" id="cards-list-view">
+        <div class="flex-1 overflow-y-auto pr-2 -mr-2 hide-scrollbar">
+          <div class="space-y-4 pb-4">
+            <div class="p-4 bg-white rounded-xl border-2 border-primary/20 shadow-sm flex items-center gap-4 relative overflow-hidden">
+              <div class="w-12 h-8 bg-surface-container-low rounded-md flex items-center justify-center border border-outline-variant/10">
+                <span class="font-bold text-xs text-primary">VISA</span>
+              </div>
+              <div class="flex-1">
+                <p class="font-bold text-sm">Visa Final 1234</p>
+                <p class="text-[10px] text-on-surface-variant uppercase font-semibold">Expira em 08/28</p>
+              </div>
+              <span class="px-2 py-0.5 bg-primary text-white text-[9px] font-bold rounded-full">PRINCIPAL</span>
+            </div>
+            <div class="p-4 bg-white rounded-xl border border-outline-variant/10 shadow-sm flex items-center gap-4">
+              <div class="w-12 h-8 bg-surface-container-low rounded-md flex items-center justify-center border border-outline-variant/10">
+                <span class="font-bold text-[10px] text-on-surface-variant">MC</span>
+              </div>
+              <div class="flex-1">
+                <p class="font-bold text-sm">Mastercard Final 8890</p>
+                <p class="text-[10px] text-on-surface-variant uppercase font-semibold">Expira em 11/26</p>
+              </div>
+              <button class="p-1 -mr-1 rounded-full hover:bg-surface-container-low transition-colors">
+                <span class="material-symbols-outlined text-on-surface-variant/40">more_vert</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 shrink-0 flex flex-col gap-3">
+          <button class="w-full py-4 bg-gradient-to-r from-primary to-tertiary-fixed text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2" onclick="showAddCardForm()">
+            <span class="material-symbols-outlined text-lg">add_card</span>
+            Adicionar novo cartão
+          </button>
+          <button class="w-full py-4 border-2 border-outline-variant/30 text-on-surface font-bold rounded-xl hover:bg-surface-container-low transition-all" onclick="toggleCardsSheet()">Fechar</button>
+        </div>
+      </div>
+      <!-- Add Card Form View -->
+      <div class="flex-1 hidden flex flex-col overflow-hidden" id="cards-form-view">
+        <div class="flex-1 overflow-y-auto pr-2 -mr-2 hide-scrollbar">
+          <div class="space-y-5 pb-4">
+            <div>
+              <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2 ml-1" for="card_number">Número do Cartão</label>
+              <input class="w-full px-4 py-3 bg-white border border-outline-variant/30 rounded-[8px] focus:ring-1 focus:ring-primary focus:border-primary text-sm placeholder:text-on-surface-variant/40" id="card_number" placeholder="0000 0000 0000 0000" type="text" />
+            </div>
+            <div class="flex gap-4">
+              <div class="flex-1">
+                <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2 ml-1" for="card_expiry">Validade (MM/AA)</label>
+                <input class="w-full px-4 py-3 bg-white border border-outline-variant/30 rounded-[8px] focus:ring-1 focus:ring-primary focus:border-primary text-sm placeholder:text-on-surface-variant/40" id="card_expiry" placeholder="MM/AA" type="text" />
+              </div>
+              <div class="flex-1">
+                <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2 ml-1" for="card_cvv">CVV</label>
+                <input class="w-full px-4 py-3 bg-white border border-outline-variant/30 rounded-[8px] focus:ring-1 focus:ring-primary focus:border-primary text-sm placeholder:text-on-surface-variant/40" id="card_cvv" placeholder="123" type="text" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2 ml-1" for="card_name">Nome no Cartão</label>
+              <input class="w-full px-4 py-3 bg-white border border-outline-variant/30 rounded-[8px] focus:ring-1 focus:ring-primary focus:border-primary text-sm placeholder:text-on-surface-variant/40" id="card_name" placeholder="Como impresso no cartão" type="text" />
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 shrink-0 flex flex-col gap-3">
+          <button class="w-full py-4 bg-gradient-to-r from-primary to-tertiary-fixed text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all" onclick="hideAddCardForm()">Confirmar</button>
+          <button class="w-full py-4 border-2 border-outline-variant/30 text-on-surface font-bold rounded-xl hover:bg-surface-container-low transition-all" onclick="hideAddCardForm()">Cancelar</button>
+        </div>
+      </div>
+      <div class="h-4 shrink-0"></div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- BOTTOM SHEET: ACCOUNT                                                  -->
+  <!-- ====================================================================== -->
+  <div id="account-overlay" class="fixed inset-0 z-[100] hidden transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="toggleAccountSheet()"></div>
+    <div id="account-sheet" class="absolute bottom-0 left-0 right-0 bg-surface rounded-t-[2rem] shadow-2xl transform transition-transform duration-300 translate-y-full px-6 pb-4 pt-4 max-h-[75vh] flex flex-col font-headline">
+      <div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mx-auto mb-6 shrink-0"></div>
+      <div class="flex items-center mb-6 shrink-0">
+        <h2 class="text-xl font-extrabold" id="account-sheet-title">Minha conta</h2>
+      </div>
+      <!-- Form View -->
+      <div class="flex flex-col flex-1 overflow-hidden" id="account-form-view">
+        <div class="flex-1 overflow-y-auto pr-2 -mr-2 hide-scrollbar pb-4">
+          <div class="bg-white rounded-[8px] border border-outline-variant/10 shadow-sm p-4 mb-3">
+            <label class="block text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-2" for="edit-nome">Nome</label>
+            <input class="w-full text-sm font-semibold bg-transparent border-none p-0 focus:ring-0 focus:outline-none" id="edit-nome" type="text" value="Matheus Oliveira" />
+          </div>
+          <div class="bg-white rounded-[8px] border border-outline-variant/10 shadow-sm p-4 mb-3">
+            <label class="block text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-2" for="edit-email">E-mail</label>
+            <input class="w-full text-sm font-semibold bg-transparent border-none p-0 focus:ring-0 focus:outline-none" id="edit-email" type="email" value="matheus.oliveira@email.com" />
+          </div>
+          <div class="bg-white rounded-[8px] border border-outline-variant/10 shadow-sm p-4 mb-3">
+            <label class="block text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-2" for="edit-telefone">Telefone</label>
+            <input class="w-full text-sm font-semibold bg-transparent border-none p-0 focus:ring-0 focus:outline-none" id="edit-telefone" type="tel" value="(11) 98765-4321" />
+          </div>
+          <div class="bg-white rounded-[8px] border border-outline-variant/10 shadow-sm p-4 mb-3">
+            <label class="block text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-2" for="edit-password">NOVA SENHA</label>
+            <input class="w-full text-sm font-semibold bg-transparent border-none p-0 focus:ring-0 focus:outline-none" id="edit-password" placeholder="********" type="password" />
+          </div>
+          <div class="bg-white rounded-[8px] border border-outline-variant/10 shadow-sm p-4 mb-4">
+            <label class="block text-[10px] text-on-surface-variant uppercase font-bold tracking-wider mb-2" for="edit-confirm-password">Confirmar senha</label>
+            <input class="w-full text-sm font-semibold bg-transparent border-none p-0 focus:ring-0 focus:outline-none" id="edit-confirm-password" placeholder="********" type="password" />
+          </div>
+        </div>
+        <div class="shrink-0 flex flex-col gap-2 pt-4 border-t border-outline-variant/10 mt-auto">
+          <button class="w-full bg-gradient-to-r from-primary to-tertiary-fixed text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 py-3" onclick="toggleAccountSheet()">
+            <span class="material-symbols-outlined text-lg">save</span>
+            Salvar alterações
+          </button>
+          <button class="w-full border-2 border-outline-variant/30 text-on-surface font-bold rounded-xl hover:bg-surface-container-low transition-all py-3" onclick="toggleAccountSheet()">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- BOOKING SUCCESS OVERLAY                                                -->
+  <!-- ====================================================================== -->
+  <div id="booking-success-overlay" class="fixed inset-0 z-[110] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl p-8 mx-6 text-center shadow-2xl max-w-sm w-full transform transition-all">
+      <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
+        <span class="material-symbols-outlined text-4xl text-green-600" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+      </div>
+      <h2 class="text-xl font-extrabold font-headline mb-2">Reserva Confirmada!</h2>
+      <p class="text-on-surface-variant text-sm mb-6">Sua reserva foi realizada com sucesso. Você pode acompanhar os detalhes na aba Reservas.</p>
+      <button id="booking-success-close" class="w-full cta-gradient text-white font-bold uppercase text-sm tracking-wider py-4 rounded-xl shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform">
+        Ver minhas reservas
+      </button>
+    </div>
+  </div>
+
+</div><!-- end #app -->
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
